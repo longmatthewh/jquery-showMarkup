@@ -3,7 +3,8 @@
     PROP_NAME_TAG = 'tagName',
     defaults = {
         initShow: true,
-        buttonShow: undefined
+        buttonShow: undefined,
+        buttonHide: undefined
     };
 
     function Plugin( element, options ) {
@@ -19,12 +20,21 @@
         }
         showMarkupForObjAndChildren($(this.element));
         attachShowButtonClick(this.options.buttonShow, $(this.element));
+        attachHideButtonClick(this.options.buttonHide, $(this.element));
     };
 
     function attachShowButtonClick(buttonShow, element) {
         if (buttonShow) {
             $(buttonShow).click(function() {
                 showMarkupForObjAndChildren(element);
+            });
+        }
+    }
+
+    function attachHideButtonClick(buttonHide, element) {
+        if (buttonHide) {
+            $(buttonHide).click(function() {
+                element.find('code').remove();
             });
         }
     }

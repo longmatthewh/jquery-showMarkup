@@ -93,6 +93,25 @@ describe('showMarkup plugin', function() {
                 verifySingleElement();
             });
         });
+
+        describe('buttonHide', function() {
+            beforeEach(function() {
+                addSingleElement();
+                $(MAIN_SELECTOR).append('<button id="hideMarkup" type="button"></button>');
+            });
+
+            it('when option defined button hides markup when clicked', function() {
+
+                $(PARENT_SELECTOR).showMarkup({
+                    'buttonHide':'#hideMarkup'
+                });
+                verifySingleElement();
+                $('#hideMarkup').click();
+                var codeElements = $(CODE_SELECTOR);
+                expect(codeElements.length).toBe(0);
+            });
+
+        });
     });
 
     function addSingleElement() {
