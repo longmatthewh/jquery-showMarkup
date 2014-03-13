@@ -2,7 +2,8 @@
     var pluginName = 'showMarkup',
     PROP_NAME_TAG = 'tagName',
     defaults = {
-        propertyName: "value"
+        initShow: true,
+        buttonShow: undefined
     };
 
     function Plugin( element, options ) {
@@ -13,8 +14,20 @@
     }
 
     Plugin.prototype.init = function () {
+        if (this.options.initShow === false && this.options.buttonShow) {
+            return;
+        }
         showMarkupForObjAndChildren($(this.element));
+        attachShowButtonClick(this.options.buttonShow, $(this.element));
     };
+
+    function attachShowButtonClick(buttonShow, element) {
+        if (buttonShow) {
+            $(buttonShow).click(function() {
+                showMarkupForObjAndChildren(element);
+            });
+        }
+    }
 
     function showMarkupForObjAndChildren(obj) {
         obj.children().each(function(idx, child) {
