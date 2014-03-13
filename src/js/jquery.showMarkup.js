@@ -15,13 +15,18 @@
     }
 
     Plugin.prototype.init = function () {
-        if (this.options.initShow === false && this.options.buttonShow) {
-            return;
-        }
-        showMarkupForObjAndChildren($(this.element));
+        initialCodeVisibility(this.options.initShow, this.options.buttonShow, $(this.element));
         attachShowButtonClick(this.options.buttonShow, $(this.element));
         attachHideButtonClick(this.options.buttonHide, $(this.element));
     };
+
+    function initialCodeVisibility(initShow, buttonShow, element) {
+        if (initShow === false && buttonShow) {
+            return;
+        }
+        showMarkupForObjAndChildren(element);
+    }
+
 
     function attachShowButtonClick(buttonShow, element) {
         if (buttonShow) {
