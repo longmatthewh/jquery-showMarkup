@@ -7,12 +7,6 @@
 
     function Plugin( element, options ) {
         this.element = element;
-
-        // jQuery has an extend method that merges the
-        // contents of two or more objects, storing the
-        // result in the first object. The first object
-        // is generally empty because we don't want to alter
-        // the default options for future instances of the plugin
         this.options = $.extend( {}, defaults, options) ;
         this._defaults = defaults;
         this.init();
@@ -35,8 +29,6 @@
         obj.html('<code>&lt;' + tagName + '&gt;</code>' + html + '<code>&lt;/' + tagName + '&gt;</code>');
     }
 
-    // A really lightweight plugin wrapper around the constructor,
-    // preventing against multiple instantiations
     $.fn[pluginName] = function ( options ) {
         return this.each(function () {
             if (!$.data(this, 'plugin_' + pluginName)) {
