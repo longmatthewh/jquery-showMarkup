@@ -33,12 +33,8 @@ describe('showMarkup plugin', function() {
         });
 
         it('adds markup visually to html', function() {
-            var codeElements = $(CODE_SELECTOR);
-            expect(codeElements.length).toBe(4);
-            expect($(codeElements[0]).html()).toBe(ARTICLE_OPEN_TAG);
-            expect($(codeElements[1]).html()).toBe(SECTION_OPEN_TAG);
-            expect($(codeElements[2]).html()).toBe(SECTION_CLOSE_TAG);
-            expect($(codeElements[3]).html()).toBe(ARTICLE_CLOSE_TAG);
+             verifyCodeElements([ARTICLE_OPEN_TAG,SECTION_OPEN_TAG,SECTION_CLOSE_TAG,ARTICLE_CLOSE_TAG]);
+
         });
     });
 
@@ -62,19 +58,14 @@ describe('showMarkup plugin', function() {
         describe('buttonShow', function() {
             beforeEach(function() {
                 addSingleElement();
-                $(MAIN_SELECTOR).append('<button id="showMarkup" type="button"></button>');
+                addButton('showMarkup');
             });
 
             it('when option defined button shows markup when clicked', function() {
 
-                $(PARENT_SELECTOR).showMarkup({
-                    'buttonShow':'#showMarkup'
-                });
-                $(MAIN_SELECTOR).find('code').remove();
-
-                var codeElements = $(CODE_SELECTOR);
-                expect(codeElements.length).toBe(0);
-
+                $(PARENT_SELECTOR).showMarkup({'buttonShow':'#showMarkup'});
+                $(MAIN_SELECTOR).find(CODE_SELECTOR).remove();
+                verifyNoCodeElements();
                 $('#showMarkup').click();
                 verifySingleElement();
             });
@@ -84,8 +75,7 @@ describe('showMarkup plugin', function() {
                     'initShow':false,
                     'buttonShow':'#showMarkup'
                 });
-                var codeElements = $(CODE_SELECTOR);
-                expect(codeElements.length).toBe(0);
+                verifyNoCodeElements();
             });
 
             it('initShow does not display markup on initialization when set to false UNLESS buttonShow undefined', function() {
@@ -97,32 +87,42 @@ describe('showMarkup plugin', function() {
         describe('buttonHide', function() {
             beforeEach(function() {
                 addSingleElement();
-                $(MAIN_SELECTOR).append('<button id="hideMarkup" type="button"></button>');
+                addButton('hideMarkup');
             });
 
             it('when option defined button hides markup when clicked', function() {
-
-                $(PARENT_SELECTOR).showMarkup({
-                    'buttonHide':'#hideMarkup'
-                });
+                $(PARENT_SELECTOR).showMarkup({'buttonHide':'#hideMarkup'});
                 verifySingleElement();
                 $('#hideMarkup').click();
-                var codeElements = $(CODE_SELECTOR);
-                expect(codeElements.length).toBe(0);
+                verifyNoCodeElements();
             });
 
         });
     });
+
+    function addButton(buttonId) {
+        $(MAIN_SELECTOR).append('<button id="' + buttonId + '" type="button"></button>');
+    }
 
     function addSingleElement() {
         var htmlContent = '<article id="parent">parent</article>';
         $(MAIN_SELECTOR).append(htmlContent);
     }
 
-    function verifySingleElement() {
+    function verifyNoCodeElements() {
         var codeElements = $(CODE_SELECTOR);
-        expect(codeElements.length).toBe(2);
-        expect($(codeElements[0]).html()).toBe(ARTICLE_OPEN_TAG);
-        expect($(codeElements[1]).html()).toBe(ARTICLE_CLOSE_TAG);
+        expect(codeElements.length).toBe(0);
+    }
+
+    function verifySingleElement() {
+        verifyCodeElements([ARTICLE_OPEN_TAG,ARTICLE_CLOSE_TAG]);
+    }
+
+    function verifyCodeElements(htmlTags) {
+        var codeElements = $(CODE_SELECTOR);
+        expect(codeElements.length).toBe(htmlTags.length);
+        $.each(htmlTags,function(idx, htmlTag) {
+            expect($(codeElements[idx]).html()).toBe(htmlTags[idx]);
+        });
     }
 });
