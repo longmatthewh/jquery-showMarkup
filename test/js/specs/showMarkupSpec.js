@@ -13,28 +13,22 @@ describe('showMarkup plugin', function() {
         $(MAIN_SELECTOR).remove();
     });
 
-    describe('used on parent element with no child', function() {
+    describe('used on parent element', function() {
         beforeEach(function() {
             addSingleElement();
-            $(PARENT_SELECTOR).showMarkup();
+
         });
 
-        it('adds markup visually to html', function() {
+        it('displays markup visually to parent without children', function() {
+            $(PARENT_SELECTOR).showMarkup();
             verifySingleElement();
         });
-    });
 
-    describe('used on parent element with children', function() {
-        beforeEach(function() {
-            addSingleElement();
+        it('displays markup visually to parent and children', function() {
             var childHtmlContent = '<section id="child">child</section>';
             $(PARENT_SELECTOR).append(childHtmlContent);
             $(PARENT_SELECTOR).showMarkup();
-        });
-
-        it('adds markup visually to html', function() {
-             verifyCodeElements([ARTICLE_OPEN_TAG,SECTION_OPEN_TAG,SECTION_CLOSE_TAG,ARTICLE_CLOSE_TAG]);
-
+            verifyCodeElements([ARTICLE_OPEN_TAG,SECTION_OPEN_TAG,SECTION_CLOSE_TAG,ARTICLE_CLOSE_TAG]);
         });
     });
 
@@ -62,7 +56,6 @@ describe('showMarkup plugin', function() {
             });
 
             it('when option defined button shows markup when clicked', function() {
-
                 $(PARENT_SELECTOR).showMarkup({'buttonShow':'#showMarkup'});
                 $(MAIN_SELECTOR).find(CODE_SELECTOR).remove();
                 verifyNoCodeElements();
