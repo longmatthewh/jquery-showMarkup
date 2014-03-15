@@ -1,6 +1,7 @@
 ;(function ( $, window, document, undefined ) {
     var PLUGIN_NAME = 'showMarkup';
-    var PROP_NAME_TAG = 'tagName',
+    var PROP_NAME_TAG = 'tagName';
+    var CODE_SELECTOR = 'code';
 
     defaults = {
         initShow: true,
@@ -40,7 +41,7 @@
     function attachHideButtonClick(buttonHide, element) {
         if (buttonHide) {
             $(buttonHide).click(function() {
-                element.find('code').remove();
+                element.find(CODE_SELECTOR).remove();
             });
         }
     }
