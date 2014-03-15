@@ -1,6 +1,7 @@
 ;(function ( $, window, document, undefined ) {
-    var pluginName = 'showMarkup',
-    PROP_NAME_TAG = 'tagName',
+    var PLUGIN_NAME = 'showMarkup';
+    var PROP_NAME_TAG = 'tagName',
+
     defaults = {
         initShow: true,
         buttonShow: undefined,
@@ -15,13 +16,13 @@
     }
 
     Plugin.prototype.init = function () {
-        initialCodeVisibility(this.options.initShow, this.options.buttonShow, $(this.element));
+        initialCodeVisibility(this.options.initShow, $(this.element));
         attachShowButtonClick(this.options.buttonShow, $(this.element));
         attachHideButtonClick(this.options.buttonHide, $(this.element));
     };
 
-    function initialCodeVisibility(initShow, buttonShow, element) {
-        if (initShow === false && buttonShow) {
+    function initialCodeVisibility(initShow, element) {
+        if (initShow === false) {
             return;
         }
         showMarkupForObjAndChildren(element);
@@ -57,10 +58,10 @@
         obj.html('<code>&lt;' + tagName + '&gt;</code>' + html + '<code>&lt;/' + tagName + '&gt;</code>');
     }
 
-    $.fn[pluginName] = function ( options ) {
+    $.fn[PLUGIN_NAME] = function ( options ) {
         return this.each(function () {
-            if (!$.data(this, 'plugin_' + pluginName)) {
-                $.data(this, 'plugin_' + pluginName,
+            if (!$.data(this, 'plugin_' + PLUGIN_NAME)) {
+                $.data(this, 'plugin_' + PLUGIN_NAME,
                     new Plugin( this, options ));
             }
         });

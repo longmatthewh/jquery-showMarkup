@@ -47,6 +47,11 @@ describe('showMarkup plugin', function() {
                 $(PARENT_SELECTOR).showMarkup({'initShow':true});
                 verifySingleElement();
             });
+
+            it('does not display markup on initialization when set to false', function() {
+                $(PARENT_SELECTOR).showMarkup({'initShow':false});
+                verifyNoCodeElements();
+            });
         });
 
         describe('buttonShow', function() {
@@ -60,19 +65,6 @@ describe('showMarkup plugin', function() {
                 $(MAIN_SELECTOR).find(CODE_SELECTOR).remove();
                 verifyNoCodeElements();
                 $('#showMarkup').click();
-                verifySingleElement();
-            });
-
-            it('initShow does not display markup on initialization when set to false AND buttonShow defined', function() {
-                $(PARENT_SELECTOR).showMarkup({
-                    'initShow':false,
-                    'buttonShow':'#showMarkup'
-                });
-                verifyNoCodeElements();
-            });
-
-            it('initShow does not display markup on initialization when set to false UNLESS buttonShow undefined', function() {
-                $(PARENT_SELECTOR).showMarkup({'initShow':false});
                 verifySingleElement();
             });
         });
