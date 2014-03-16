@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <title>jquery.showMarkup demo page</title>
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+        <link href="demo.css" rel="stylesheet">
+    </head>
+    <body>
+    <article>
+        <header>
+            <h1>Demo Page for <em>jquery.showMarkup</em></h1>
+            Here's the demo page for the jquery.showMarkup jQuery plugin.
+        </header>
+        <section id="all-defaults">
+            <header>
+                <h2>All Defaults</h2>
+                Here's a demo of the plugin with all of the defaults.
+            </header>
+            <section class="demo">
+                <h3>Example 1: Guitars</h3>
+                <p>Guitars are one of the best instruments ever invented. Perhaps they are among the coolest things in existence.</p>
+            </section>
+        </section>
+        <section id="show-hide-buttons">
+            <header>
+                <h2>Show and Hide Buttons</h2>
+                Here's a demo of the plugin with specified show and hide markup buttons.
+            </header>
+            <section class="demo">
+                <h3>Example 2: Guitars</h3>
+                <p>Guitars are one of the best instruments ever invented. Perhaps they are among the coolest things in existence.</p>
+            </section>
+            <button class="show-markup">Show Markup</button>
+            <button class="hide-markup">Hide Markup</button>
+        </section>
+    </article>
+    <script src="../src/js/lib/jquery-1.11.0.js"></script>
+    <script src="../dist/jquery.showMarkup.min.js"></script>
+    <script>
+        $('#all-defaults > .demo').showMarkup();
+        $('#show-hide-buttons > .demo').showMarkup({
+            'buttonShow':'#show-hide-buttons .show-markup',
+            'buttonHide':'#show-hide-buttons .hide-markup',
+            initShow:false
+        });
+    </script>
+    </body>
+</html>
