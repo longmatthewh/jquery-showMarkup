@@ -22,6 +22,7 @@ describe('showMarkup plugin', function() {
         it('displays markup visually to parent without children', function() {
             $(PARENT_SELECTOR).showMarkup();
             verifySingleElement();
+            expect(true).toBeTruthy();
         });
 
         it('displays markup visually to parent and children', function() {
