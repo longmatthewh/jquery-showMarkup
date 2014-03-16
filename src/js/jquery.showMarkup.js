@@ -16,10 +16,12 @@
         this.init();
     }
 
-    Plugin.prototype.init = function () {
-        initialCodeVisibility(this.options.initShow, $(this.element));
-        attachShowButtonClick(this.options.buttonShow, $(this.element));
-        attachHideButtonClick(this.options.buttonHide, $(this.element));
+    Plugin.prototype = {
+            init : function () {
+                initialCodeVisibility(this.options.initShow, $(this.element));
+                attachShowButtonClick(this.options.buttonShow, $(this.element));
+                attachHideButtonClick(this.options.buttonHide, $(this.element));
+            }
     };
 
     function initialCodeVisibility(initShow, element) {
