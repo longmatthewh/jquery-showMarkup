@@ -28,7 +28,12 @@ describe('showMarkup plugin', function() {
             var childHtmlContent = '<section id="child">child</section>';
             $(PARENT_SELECTOR).append(childHtmlContent);
             $(PARENT_SELECTOR).showMarkup();
-            verifyCodeElements([ARTICLE_OPEN_TAG,SECTION_OPEN_TAG,SECTION_CLOSE_TAG,ARTICLE_CLOSE_TAG]);
+            verifyCodeElements([
+                {tagHtml : ARTICLE_OPEN_TAG, tagParent : 'article'},
+                {tagHtml : SECTION_OPEN_TAG, tagParent : 'section'},
+                {tagHtml : SECTION_CLOSE_TAG, tagParent : 'section'},
+                {tagHtml : ARTICLE_CLOSE_TAG, tagParent : 'article'}
+            ]);
         });
     });
 
@@ -100,14 +105,20 @@ describe('showMarkup plugin', function() {
     }
 
     function verifySingleElement() {
-        verifyCodeElements([ARTICLE_OPEN_TAG,ARTICLE_CLOSE_TAG]);
+        verifyCodeElements([
+            {tagHtml : ARTICLE_OPEN_TAG, tagParent : 'article'},
+            {tagHtml : ARTICLE_CLOSE_TAG, tagParent : 'article'}
+        ]);
     }
 
     function verifyCodeElements(htmlTags) {
         var codeElements = $(CODE_SELECTOR);
         expect(codeElements.length).toBe(htmlTags.length);
         $.each(htmlTags,function(idx, htmlTag) {
-            expect($(codeElements[idx]).html()).toBe(htmlTags[idx]);
+            var codeElement = $(codeElements[idx]);
+            var htmlTag = htmlTags[idx];
+            expect(codeElement.html()).toBe(htmlTag.tagHtml);
+            expect(codeElement.parent(htmlTag.tagParent).length).toBe(1);
         });
     }
 });
