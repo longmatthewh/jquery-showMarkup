@@ -12,38 +12,38 @@
     function Plugin( element, options ) {
         this.element = element;
         this.options = $.extend( {}, defaults, options) ;
-        this._defaults = defaults;
         this.init();
     }
 
     Plugin.prototype = {
-            init : function () {
-                initialCodeVisibility(this.options.initShow, $(this.element));
-                attachShowButtonClick(this.options.buttonShow, $(this.element));
-                attachHideButtonClick(this.options.buttonHide, $(this.element));
-            }
+        init : function () {
+            var $elementWithMarkup = $(this.element);
+            initialCodeVisibility(this.options.initShow, $elementWithMarkup);
+            attachShowButtonClick(this.options.buttonShow, $elementWithMarkup);
+            attachHideButtonClick(this.options.buttonHide, $elementWithMarkup);
+        }
     };
 
-    function initialCodeVisibility(initShow, element) {
+    function initialCodeVisibility(initShow, $element) {
         if (initShow === false) {
             return;
         }
-        showMarkupForObjAndChildren(element);
+        showMarkupForObjAndChildren($element);
     }
 
 
-    function attachShowButtonClick(buttonShow, element) {
+    function attachShowButtonClick(buttonShow, $element) {
         if (buttonShow) {
-            $(buttonShow).click(function() {
-                showMarkupForObjAndChildren(element);
+            $('body').delegate(buttonShow, 'click', function() {
+                showMarkupForObjAndChildren($element);
             });
         }
     }
 
-    function attachHideButtonClick(buttonHide, element) {
+    function attachHideButtonClick(buttonHide, $element) {
         if (buttonHide) {
-            $(buttonHide).click(function() {
-                element.find(CODE_SELECTOR).remove();
+            $('body').delegate(buttonHide, 'click', function() {
+                $element.find(CODE_SELECTOR).remove();
             });
         }
     }
@@ -58,6 +58,9 @@
     function showMarkup(obj) {
         var html = obj.html();
         var tagName = obj.prop(PROP_NAME_TAG).toLowerCase();
+        if (tagName === 'button') {
+            return;
+        }
         obj.html('<code>&lt;' + tagName + '&gt;</code>' + html + '<code>&lt;/' + tagName + '&gt;</code>');
     }
 
