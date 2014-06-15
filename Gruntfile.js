@@ -11,13 +11,21 @@ module.exports = function(grunt) {
                 src: 'src/js/<%= pkg.name %>.js',
                 dest: 'dist/<%= pkg.name %>.min.js'
             }
+        },
+        jshint: {
+            all: ['src/js/<%= pkg.name %>.js']
+        },
+        jasmine: {
+            src: ['src/js/lib/jquery-1.11.0.js','src/js/jquery.showMarkup.js'],
+            options: {
+                specs: 'test/js/specs/showMarkupSpec.js'
+            }
         }
     });
 
-    // Load the plugin that provides the "uglify" task.
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-
-    // Default task(s).
-    grunt.registerTask('default', ['uglify']);
-
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.registerTask('default', ['uglify', 'jshint']);
+    grunt.registerTask('travis', ['jshint','jasmine']);
 };
